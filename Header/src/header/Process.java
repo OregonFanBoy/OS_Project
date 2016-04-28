@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 public class Process {
 	public static final int RUNNING		= 0;
@@ -37,7 +36,7 @@ public class Process {
 		previous = null;
 		//className = Class.forName("programs."+getName());
 	}
-	public String run(PrintWriter out, File file) throws InstantiationException, IllegalAccessException{	
+	public String run(PrintWriter out, File file) throws InstantiationException, IllegalAccessException, InterruptedException{	
 		startTime = System.currentTimeMillis() % 100000;
 		StringBuilder strBuild = new StringBuilder();
 		try{

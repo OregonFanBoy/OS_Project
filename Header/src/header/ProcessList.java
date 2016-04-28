@@ -4,7 +4,7 @@ public class ProcessList {
 	private Process tail;
 	
 	public ProcessList(){
-		head = tail =null;
+		head = tail = null;
 		
 	}
 	
@@ -88,5 +88,10 @@ public class ProcessList {
 			
 		}
 		 return null;
+	}
+	
+	public String getName(){
+		return null;
+		
 	}
 }
