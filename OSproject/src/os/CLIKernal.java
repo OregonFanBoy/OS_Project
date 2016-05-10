@@ -1,12 +1,10 @@
 package os;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import console.*;
 import header.Command;
 import header.ProcessList;
 import header.Program;
-import header.Process;
 public class CLIKernal implements CommandListener{
 	OSConsole console;
 	@SuppressWarnings("rawtypes")
@@ -22,7 +20,7 @@ public class CLIKernal implements CommandListener{
 	}
 	
 	public CLIKernal(){
-		console = new OSConsole("BTLinux : Batch Sequencer");
+		console = new OSConsole("The Frank and Neal Show");
 		console.setCommandListener(this);
 		console.write("Prompt--->  ");
 	}
