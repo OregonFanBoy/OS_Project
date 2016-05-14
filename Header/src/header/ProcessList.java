@@ -1,5 +1,12 @@
 package header;
-public class ProcessList {
+
+import java.io.Serializable;
+
+public class ProcessList implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Process head, tail;
 	private String name;
 	public ProcessList prev, next;
@@ -86,29 +93,9 @@ public class ProcessList {
 	}
 	
 	public String getName(){
-		return null;
+		return name;
 		
 	}
-	public void reQueue(Process p){
-		if(p==head){
-			if(p.getPriority()<p.next.getPriority()){
-				p.next.previous = p.next;
-				head = p.next;
-				head.previous = null;
-			}
-			enQueue(p);
-		}
-		else{
-			if(p==tail){
-				tail = p.previous;
-				tail.next = null;
-			}
-			else{
-				p.next.previous = p.previous;
-				p.previous.next = p.next;
-			}
-			enQueue(p);
-		}
-	}
+	
 	
 }

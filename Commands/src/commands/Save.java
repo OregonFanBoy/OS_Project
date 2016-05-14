@@ -21,6 +21,7 @@ public class Save extends Command{
 			obj_out.close();
 		}
 		catch(Exception ex){
+			ex.printStackTrace();
 			return "Batch file not saved";
 		}
 		return "Batch " + list.getName() +" was saved";

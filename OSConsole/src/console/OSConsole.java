@@ -16,12 +16,12 @@ public class OSConsole extends JFrame
 	OSConsole console;
 	private static final long serialVersionUID = 1L;
 	private static final int MAX_HISTORY = 100;
-	private JTextArea textArea;
+	private static JTextArea textArea;
 	private Vector<String> history;
 	private int historyIndex;
 	private boolean passwordMode;
 	private String passwordData;
-	private int lastCommandOffset;
+	private static int lastCommandOffset;
 	
 	private static CommandListener listener;
 	
@@ -173,7 +173,7 @@ int typeCount = 0, pressCount = 0;
 	 * 
 	 * @param text The output to display
 	 */
-	public void write(final String text)
+	public static void write(final String text)
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
@@ -193,7 +193,7 @@ int typeCount = 0, pressCount = 0;
 	 * 
 	 * @param text The output to display
 	 */
-	public void writeLine(String text)
+	public static void writeLine(String text)
 	{
 		write(text + "\n");
 	}

@@ -18,7 +18,7 @@ public class Priority extends Command {
 		else if(process == null) return "Id not found or does not exist";
 		else{
 			list.setPriority(id, priority);
-			list.reQueue(process);
+			
 		}
 	/*
 			if(process == null)

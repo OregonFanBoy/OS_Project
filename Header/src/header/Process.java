@@ -3,8 +3,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
-public class Process {
+public class Process implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final int RUNNING		= 0;
 	public static final int WAIT		= 1;
 	public static final int IDLE		= 2;

@@ -16,6 +16,8 @@ public class BatchThread extends Thread {
 		Process p;
 		PrintWriter out;
 		StringBuilder builder;
+		
+		
 		public BatchThread(PrintWriter out,String batchName, String fileName, ProcessList pL, int doze){
 			this.batchName = batchName;
 			this.fileName = fileName;

@@ -11,6 +11,7 @@ public class Queue extends Command{
 		StringBuilder builder = new StringBuilder();
 		Process p = list.peek();
 		String header;
+		builder.append(String.format("Current batch queue = " +list.getName() + "\n"));
 		builder.append(String.format("%-16s","Name"));
 		builder.append(String.format("%-14s","ID"));
 		builder.append(String.format("%-14s","Status"));
