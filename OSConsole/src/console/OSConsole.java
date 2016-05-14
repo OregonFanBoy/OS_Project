@@ -13,9 +13,9 @@ import java.util.*;
 /** OS command line console to be used with the batch sequencer simulated OS */
 public class OSConsole extends JFrame
 {
+	OSConsole console;
 	private static final long serialVersionUID = 1L;
 	private static final int MAX_HISTORY = 100;
-	
 	private JTextArea textArea;
 	private Vector<String> history;
 	private int historyIndex;

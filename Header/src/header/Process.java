@@ -45,14 +45,15 @@ public class Process {
 			className = Class.forName("programs." + getName());
 			classInstance = (Program)className.newInstance();
 			int r = classInstance.run(out, args);
-			if(r == 1){
-				this.status = 4;
+			if(r > 4){
+				this.status = ABORTED;
 				strBuild.append(getName() + " did not run successfully \n");
 			} else{
-				this.status = 3;
-				strBuild.append(getName() + " ran successfully time = 0 \n");
+				this.status = RUNNING;
+				strBuild.append(getName() + " ran successfully time = "+getRunTime()+ "\n");
 			}		
 		} catch(Throwable t){
+			out.close();
 			return "Program not found";
 		}
 		out.close();
@@ -83,7 +84,7 @@ public class Process {
 		long time;
 		if(status>2){
 			time = startTime-endTime;
-		}else if (status == 2){
+		}else if (status == 2 || status == 4){
 			time = 0;
 		} else {
 			long ttime = System.currentTimeMillis() % 100000;
@@ -93,19 +94,23 @@ public class Process {
 	}
 	   public String getStatus() {
 		   switch(this.status){
-		   case 0:
+		   case RUNNING:
 			   return "Running";
-		   case 1:
+		   case WAIT:
 			   return "Wait";
-		   case 2:
+		   case IDLE:
 			   return "Idle";
-		   case 3:
+		   case TERMINATED:
 			   return "Terminated";
-		   case 4:
+		   case ABORTED:
 			   return "Aborted";
 		   default:
 			   return "ERROR: No Status.";
 		   }
+	   }
+	   
+	   public void setStatus(int status){
+		   this.status = status;
 	   }
 	   public String toString(String[] args, int priority, long id ){
 			String strin = "";

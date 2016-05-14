@@ -1,4 +1,6 @@
 package commands;
+import header.BatchList;
+import header.BatchThread;
 import header.Command;
 import header.ProcessList;
 import header.Program;
@@ -12,28 +14,18 @@ public class Run extends Command{
 	Program classInstance;
 	//execute method
 	@Override
-	public String execute(String[] args, ProcessList list) {
+	public String execute(String[] args, ProcessList list, BatchList batch) {
 		
-		Process p = list.peek();
-		File file = new File(args[0] + ".bat"); 
-		String str = null;
-		StringBuilder strBuild = new StringBuilder();
-		try {
-			out = new PrintWriter(file);
+		try{
+			if(list == null) return "No batch has been initalized"; //check if list initialized
+			File file = new File(args[0] + ".bat"); 
+			out = new PrintWriter(file); // Overwrite previous file
 			out.close();
-		} catch (FileNotFoundException e) {
-			return "error occured";
-		}
-		while(p != null){
-			  try{     
-					str = p.run(out, file);
-					strBuild.append(str);
-					list.deQueue();
-		       } catch (Throwable t){ 
-		    	   return "Program error";
-		       }
-			  p = p.next;
-		}
-		return strBuild.toString();
+			int i = Integer.parseInt(args[1]);
+			BatchThread thread = new BatchThread(out,args[0], file.toString(), list, i);
+			thread.start();
+	
+		}catch(Throwable t){t.printStackTrace();}
+		return list.getName() + " is running";
 	}
 }

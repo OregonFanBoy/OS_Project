@@ -1,23 +1,17 @@
 package header;
 public class ProcessList {
-	private Process head;
-	private Process tail;
+	private Process head, tail;
+	private String name;
+	public ProcessList prev, next;
 	
-	public ProcessList(){
+	public ProcessList(String name){
 		head = tail = null;
-		
+		prev = next = null;
+		this.name = name;
 	}
 	
 	public Process setPriority(long id, int priority){
 		Process p = find(id);
-		/*
-		 if(p==null){
-			   return null;
-		   }
-		   else{
-			   p.setPriority(priority);
-		   }
-		 */
 		p.setPriority(priority);
 		return p;
 	}
@@ -40,10 +34,11 @@ public class ProcessList {
 	}
 	
 	public void enQueue(Process p){
+		Process current_p = head;
 		if(isEmpty()){
 			head = p;
 		} else {
-			Process current_p = head;
+			
 			while(current_p.next != null){
 				current_p = current_p.next;
 			}
@@ -94,4 +89,26 @@ public class ProcessList {
 		return null;
 		
 	}
+	public void reQueue(Process p){
+		if(p==head){
+			if(p.getPriority()<p.next.getPriority()){
+				p.next.previous = p.next;
+				head = p.next;
+				head.previous = null;
+			}
+			enQueue(p);
+		}
+		else{
+			if(p==tail){
+				tail = p.previous;
+				tail.next = null;
+			}
+			else{
+				p.next.previous = p.previous;
+				p.previous.next = p.next;
+			}
+			enQueue(p);
+		}
+	}
+	
 }

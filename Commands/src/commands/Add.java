@@ -1,4 +1,5 @@
 package commands;
+import header.BatchList;
 import header.Command;
 import header.Process;
 import header.ProcessList;
@@ -14,7 +15,7 @@ public class Add extends Command{
 	//@SuppressWarnings("static-access")
 	
 	@Override
-	public String execute(String args[],ProcessList list){
+	public String execute(String args[],ProcessList list, BatchList batch){
 		Process p;
 		long pid = System.currentTimeMillis() % 100000;
 		int priority = Thread.NORM_PRIORITY;	
@@ -22,15 +23,13 @@ public class Add extends Command{
 			@SuppressWarnings("rawtypes")
 			 Class className = Class.forName("programs." + args[0]);
 	         classInstance = (Program)className.newInstance();
-			if(list != null){
 	         p = new Process(args, priority, pid);
-			 list.enQueue(p); // add process
-			}
-			else{
-				return "ERROR: Batch not created!\n";
-			}
+	         list.enQueue(p);
+	         
 		}catch(Exception e){
-			return "ERROR: Batch not created!\n";
+			if(list == null) return "Batch was not initalized";
+			else return "Class not found";
+			
 		 }
 		
 		return "process " + args[0] + " was added to batch"; // success

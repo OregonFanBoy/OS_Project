@@ -1,4 +1,5 @@
 package commands;
+import header.BatchList;
 import header.Command;
 import header.ProcessList;
 import header.Process;
@@ -6,7 +7,7 @@ import header.Process;
 public class Queue extends Command{
 	//public Queue(){}
 	@Override
-	public String execute(String args[],ProcessList list){
+	public String execute(String args[],ProcessList list, BatchList batch){
 		StringBuilder builder = new StringBuilder();
 		Process p = list.peek();
 		String header;

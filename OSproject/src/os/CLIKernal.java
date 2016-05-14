@@ -1,10 +1,13 @@
 package os;
 import java.io.PrintWriter;
 
-import console.*;
+import console.CommandListener;
+import console.OSConsole;
+import header.BatchList;
 import header.Command;
 import header.ProcessList;
 import header.Program;
+
 public class CLIKernal implements CommandListener{
 	OSConsole console;
 	@SuppressWarnings("rawtypes")
@@ -14,7 +17,9 @@ public class CLIKernal implements CommandListener{
 	ProcessList list;
 	PrintWriter out;
 	String args[];
-
+	String name;
+	BatchList batch;
+	
 	public static void main(String[] args) {
 		new CLIKernal();
 	}
@@ -22,6 +27,7 @@ public class CLIKernal implements CommandListener{
 	public CLIKernal(){
 		console = new OSConsole("The Frank and Neal Show");
 		console.setCommandListener(this);
+		batch = new BatchList();
 		console.write("Prompt--->  ");
 	}
 	
@@ -31,21 +37,36 @@ public class CLIKernal implements CommandListener{
 		String command = input;
 		String[] argData = command.split(" ");
 		// either set up the program or assume OS command
-		command = argData[0].substring(0, 1).toUpperCase() + argData[0].substring(1).toLowerCase();
+		
 		// try/catch
 	       try{  
+	    	   command = argData[0].substring(0, 1).toUpperCase() + argData[0].substring(1).toLowerCase();
 	           className = Class.forName("commands." + command);  // Call the class loader to load and compile the command
 	           com = (Command) className.newInstance();
 	           
 	           if(argData.length > 1){ 
 		   			args = new String[argData.length - 1];
 		   			System.arraycopy(argData, 1, args, 0, args.length);
-		   			args[0] = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();    
+		   			args[0] = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
+		   			name = args[0] + " initialized";
 	   			}
 	         
-	            String call = com.execute(args, list); //find command
-	   			console.writeLine(call);
-	   			if(call == "New batch initialized") list = new ProcessList(); // new batch created
+	            String call = com.execute(args, list, batch); //find command
+	   			//console.writeLine(call);
+	   			if(call.equals(name)) {
+	   				list = new ProcessList(args[0]); // new batch created
+	   				batch.enQueue(list);
+	   				console.writeLine(call);
+	   			}
+	   			else if(argData.length > 1 && call.equals(args[0])){
+	   				list = batch.find(call);
+	   				console.writeLine(call + " is now active");
+	   			}
+	   			else if(argData.length > 1 && call.equals(args[0]+ " removed")){
+	   				console.writeLine(call);
+	   				list = null;
+	   			}
+	   			else console.writeLine(call);
 	   			args = null; 
 	   			
 	       } catch (Throwable t){ 
