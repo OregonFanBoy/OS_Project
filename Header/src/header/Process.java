@@ -50,7 +50,7 @@ public class Process implements Serializable {
 			className = Class.forName("programs." + getName());
 			classInstance = (Program)className.newInstance();
 			int r = classInstance.run(out, args);
-			if(r > 4){
+			if(r > 0){
 				this.status = ABORTED;
 				strBuild.append(getName() + " did not run successfully \n");
 			} else{
@@ -108,7 +108,7 @@ public class Process implements Serializable {
 		   case TERMINATED:
 			   return "Terminated";
 		   case ABORTED:
-			   return "Aborted";
+			   return "ABORTED";
 		   default:
 			   return "ERROR: No Status.";
 		   }

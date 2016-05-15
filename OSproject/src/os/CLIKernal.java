@@ -28,7 +28,7 @@ public class CLIKernal implements CommandListener{
 		console = new OSConsole("The Frank and Neal Show");
 		console.setCommandListener(this);
 		batch = new BatchList();
-		console.write("Prompt--->  ");
+		OSConsole.write("Prompt--->  ");
 	}
 	
 	@Override
@@ -56,24 +56,30 @@ public class CLIKernal implements CommandListener{
 	   			if(call.equals(name)) {
 	   				list = new ProcessList(args[0]); // new batch created
 	   				batch.enQueue(list);
-	   				console.writeLine(call);
+	   				OSConsole.writeLine(call);
 	   			}
 	   			else if(argData.length > 1 && call.equals(args[0])){
 	   				list = batch.find(call);
-	   				console.writeLine(call + " is now active");
+	   				OSConsole.writeLine(call + " is now active");
 	   			}
 	   			else if(argData.length > 1 && call.equals(args[0]+ " removed")){
-	   				console.writeLine(call);
+	   				OSConsole.writeLine(call);
 	   				list = null;
 	   			}
-	   			else console.writeLine(call);
+	   			else OSConsole.writeLine(call);
+	   			/*if(args[0].equals("Kill")){
+	   				className = Class.forName("commands." + "Switch");  // Call the class loader to load and compile the command
+	 	            com = (Command) className.newInstance();
+	   				com.execute(args,list, batch);
+	   			}
+	   			*/	
 	   			args = null; 
 	   			
 	       } catch (Throwable t){ 
-	    	   if(list == null) console.writeLine("No batch has been initalized" ); //no batch exists
-	    	   else console.writeLine("Command not found" );// The class file did not exist
+	    	   if(list == null) OSConsole.writeLine("No batch has been initalized" ); //no batch exists
+	    	   else OSConsole.writeLine("Command not found" );// The class file did not exist
 	       } //end try/catch
-	       console.write("Prompt--->  ");
+	       OSConsole.write("Prompt--->  ");
 	 }  // End CommandReceived method
 
 }

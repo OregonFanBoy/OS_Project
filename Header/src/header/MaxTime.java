@@ -26,7 +26,7 @@ public class MaxTime extends Thread implements Runnable{
 	public void run() {
 		try {
 			sleep(doze); // sleeps for batch time run limit (if non-zero)
-			console.writeLine(batchName + " failed: check the maximum time limit");
+			OSConsole.writeLine(batchName + " failed: check the maximum time limit");
 			bThread.interrupt();
 		} catch (InterruptedException e) {
 			//just exits	

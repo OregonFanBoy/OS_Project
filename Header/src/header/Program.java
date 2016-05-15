@@ -17,7 +17,7 @@ public abstract class Program extends Thread implements Serializable {
 		public abstract int run(PrintWriter out, String[] args)throws InterruptedException;
 		
 		// Fair share scheduling and check time limit interrupts
-		public void schedule() throws InterruptedException{
+		public static void schedule() throws InterruptedException{
 		
 			me = Thread.currentThread();
 			if(me.isInterrupted())

@@ -40,9 +40,11 @@ public class Primes extends Program {
 				}
 			}
 			
-			for(int i=0;i<input;i++)
+			for(int i=0;i<input;i++){
 				out.println(prime[i]);
-		} catch(Exception e){
+				schedule();
+			}
+		} catch(Exception interupt){
 			return ILLEGAL_PARAMETER;
 		}
 		return SUCCESS;
