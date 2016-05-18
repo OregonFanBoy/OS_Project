@@ -1,23 +1,24 @@
 package header;
-public class ProcessList {
-	private Process head;
-	private Process tail;
+
+import java.io.Serializable;
+
+public class ProcessList implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Process head, tail;
+	private String name;
+	public ProcessList prev, next;
 	
-	public ProcessList(){
-		head = tail =null;
-		
+	public ProcessList(String name){
+		head = tail = null;
+		prev = next = null;
+		this.name = name;
 	}
 	
 	public Process setPriority(long id, int priority){
 		Process p = find(id);
-		/*
-		 if(p==null){
-			   return null;
-		   }
-		   else{
-			   p.setPriority(priority);
-		   }
-		 */
 		p.setPriority(priority);
 		return p;
 	}
@@ -40,10 +41,11 @@ public class ProcessList {
 	}
 	
 	public void enQueue(Process p){
+		Process current_p = head;
 		if(isEmpty()){
 			head = p;
 		} else {
-			Process current_p = head;
+			
 			while(current_p.next != null){
 				current_p = current_p.next;
 			}
@@ -89,4 +91,11 @@ public class ProcessList {
 		}
 		 return null;
 	}
+	
+	public String getName(){
+		return name;
+		
+	}
+	
+	
 }

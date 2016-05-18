@@ -6,24 +6,28 @@ public class Tower extends Program{
 	public Tower(){
 		super("Towers of Hanoi");
 	}
-	public int run(PrintWriter out, String[] args){
+	public int run(PrintWriter out, String[] args) throws InterruptedException{
 		int numRings = Integer.parseInt(args[1]);
-	 	   if (numRings<1) return(ILLEGAL_PARAMETER);
+	 	  if (numRings<1) return(ILLEGAL_PARAMETER);
 	 	
 	 	   out.println(args[0]+ ": With " + numRings + " rings");
-	 	  
+	 	  try{
 	 	   doTowers(out,numRings, 'A', 'B', 'C');
-	 	   
+	 	  }
+	 	  catch(Exception inturpt){
+	 		  return ILLEGAL_PARAMETER;
+	 	  }
 	 	   return SUCCESS;
 	 	}	
 	 	
-	 	public static void doTowers(PrintWriter out,int topN, char from, char inter, char to) {
+	 	public static void doTowers(PrintWriter out,int topN, char from, char inter, char to) throws InterruptedException {
 	 	    if (topN == 1){
 	 	      out.println("Ring 1 from " + from + " to " + to);
 	 	    }else {
 	 	      doTowers(out,topN - 1, from, to, inter);
 	 	      out.println("Ring " + topN + " from " + from + " to " + to);
 	 	      doTowers(out,topN - 1, inter, from, to);
+	 	      schedule();
 	 	    }
 	}
 		/*try{

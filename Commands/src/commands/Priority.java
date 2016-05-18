@@ -1,4 +1,5 @@
 package commands;
+import header.BatchList;
 import header.Command;
 import header.ProcessList;
 import header.Process;
@@ -8,15 +9,17 @@ public class Priority extends Command {
 		
 	}
 	@Override
-	public String execute(String[] args,ProcessList list){
+	public String execute(String[] args,ProcessList list, BatchList batch){
 		Process process;
 		long id = Long.parseLong(args[0]);
 		int priority = Integer.parseInt(args[1]);
 		process = list.find(id);
-		if(priority <1 || priority > 9) return "You must enter between valures 1 and 9";
+		if(priority <Thread.MIN_PRIORITY || priority > Thread.MAX_PRIORITY - 1) return "You must enter between valures 1 and 9";
 		else if(process == null) return "Id not found or does not exist";
-		else
+		else{
 			list.setPriority(id, priority);
+			
+		}
 	/*
 			if(process == null)
 				return "Id not found or does not exist";

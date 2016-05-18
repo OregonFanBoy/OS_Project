@@ -1,27 +1,28 @@
 package header;
 import java.io.*;
 
-public abstract class Program implements Serializable {
+public abstract class Program extends Thread implements Serializable {
 	public final static long serialVersionUID =1;
 		public final static int SUCCESS =0;
 		public final static int ILLEGAL_PARAMETER = 1;
-		private String name;
+		static Thread me;
 		
 		public Program(String name){
-			this.name = name;
+			this.setPriority(NORM_PRIORITY);
+			this.start();
 		}
 		
-		//Retrun process name
-		public String getName(){
-			return name;
-		}
 		
 		//Abstract run mehtod
-		public abstract int run(PrintWriter out, String[] args);
+		public abstract int run(PrintWriter out, String[] args)throws InterruptedException;
 		
 		// Fair share scheduling and check time limit interrupts
-		public void schedule() throws InterruptedException{
-			throw new InterruptedException("This method will be completed in a later lab");
+		public static void schedule() throws InterruptedException{
+		
+			me = Thread.currentThread();
+			if(me.isInterrupted())
+				throw new InterruptedException();
+			yield();
 		}
 		
 		//OS System call interface

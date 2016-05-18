@@ -1,12 +1,13 @@
 package os;
-import java.io.IOException;
 import java.io.PrintWriter;
 
-import console.*;
+import console.CommandListener;
+import console.OSConsole;
+import header.BatchList;
 import header.Command;
 import header.ProcessList;
 import header.Program;
-import header.Process;
+
 public class CLIKernal implements CommandListener{
 	OSConsole console;
 	@SuppressWarnings("rawtypes")
@@ -16,15 +17,18 @@ public class CLIKernal implements CommandListener{
 	ProcessList list;
 	PrintWriter out;
 	String args[];
-
+	String name;
+	BatchList batch;
+	
 	public static void main(String[] args) {
 		new CLIKernal();
 	}
 	
 	public CLIKernal(){
-		console = new OSConsole("BTLinux : Batch Sequencer");
+		console = new OSConsole("The Frank and Neal Show");
 		console.setCommandListener(this);
-		console.write("Prompt--->  ");
+		batch = new BatchList();
+		OSConsole.write("Prompt--->  ");
 	}
 	
 	@Override
@@ -33,28 +37,49 @@ public class CLIKernal implements CommandListener{
 		String command = input;
 		String[] argData = command.split(" ");
 		// either set up the program or assume OS command
-		command = argData[0].substring(0, 1).toUpperCase() + argData[0].substring(1).toLowerCase();
+		
 		// try/catch
 	       try{  
+	    	   command = argData[0].substring(0, 1).toUpperCase() + argData[0].substring(1).toLowerCase();
 	           className = Class.forName("commands." + command);  // Call the class loader to load and compile the command
 	           com = (Command) className.newInstance();
 	           
 	           if(argData.length > 1){ 
 		   			args = new String[argData.length - 1];
 		   			System.arraycopy(argData, 1, args, 0, args.length);
-		   			args[0] = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();    
+		   			args[0] = args[0].substring(0, 1).toUpperCase() + args[0].substring(1).toLowerCase();
+		   			name = args[0] + " initialized";
 	   			}
 	         
-	            String call = com.execute(args, list); //find command
-	   			console.writeLine(call);
-	   			if(call == "New batch initialized") list = new ProcessList(); // new batch created
+	            String call = com.execute(args, list, batch); //find command
+	   			//console.writeLine(call);
+	   			if(call.equals(name)) {
+	   				list = new ProcessList(args[0]); // new batch created
+	   				batch.enQueue(list);
+	   				OSConsole.writeLine(call);
+	   			}
+	   			else if(argData.length > 1 && call.equals(args[0])){
+	   				list = batch.find(call);
+	   				OSConsole.writeLine(call + " is now active");
+	   			}
+	   			else if(argData.length > 1 && call.equals(args[0]+ " removed")){
+	   				OSConsole.writeLine(call);
+	   				list = null;
+	   			}
+	   			else OSConsole.writeLine(call);
+	   			/*if(args[0].equals("Kill")){
+	   				className = Class.forName("commands." + "Switch");  // Call the class loader to load and compile the command
+	 	            com = (Command) className.newInstance();
+	   				com.execute(args,list, batch);
+	   			}
+	   			*/	
 	   			args = null; 
 	   			
 	       } catch (Throwable t){ 
-	    	   if(list == null) console.writeLine("No batch has been initalized" ); //no batch exists
-	    	   else console.writeLine("Command not found" );// The class file did not exist
+	    	   if(list == null) OSConsole.writeLine("No batch has been initalized" ); //no batch exists
+	    	   else OSConsole.writeLine("Command not found" );// The class file did not exist
 	       } //end try/catch
-	       console.write("Prompt--->  ");
+	       OSConsole.write("Prompt--->  ");
 	 }  // End CommandReceived method
 
 }

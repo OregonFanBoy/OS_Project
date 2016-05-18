@@ -7,8 +7,9 @@ public class Fibonacci extends Program{
 	public Fibonacci(){
 		super("Fibonacci Calculator");
 	}
-	public int run(PrintWriter out, String[] args){
+	public int run(PrintWriter out, String[] args) throws InterruptedException{
 		long maxNumber = Long.parseLong(args[1]);
+		try{
 		if (maxNumber < 1) return(ILLEGAL_PARAMETER);
 		
 		out.println(args[0]+ ": Sequence up to "+ maxNumber + " numbers");
@@ -20,6 +21,11 @@ public class Fibonacci extends Program{
 			first = second;
 			second = newNumber;
 			out.println(newNumber);
+			schedule();
+		}
+		}
+		catch(Exception intrupt){
+			return ILLEGAL_PARAMETER;
 		}
 		return SUCCESS;
 	}

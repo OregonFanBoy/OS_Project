@@ -1,4 +1,5 @@
 package commands;
+import header.BatchList;
 import header.Command;
 import header.ProcessList;
 
@@ -7,7 +8,7 @@ public class Cat extends Command {
 	public Cat(){}
 	
 	@Override
-	public String execute(String[] args,ProcessList list){
+	public String execute(String[] args,ProcessList list, BatchList batch){
 		String str;
 		  BufferedReader br = null,in;
 		  StringBuilder strBuild = new StringBuilder();
@@ -21,6 +22,7 @@ public class Cat extends Command {
 			         }       
 			           br.close();
 			      }catch(Throwable t){
+			    	  t.printStackTrace();
 			       return "File not found or does not exist";
 			      }
 		return strBuild.toString();
