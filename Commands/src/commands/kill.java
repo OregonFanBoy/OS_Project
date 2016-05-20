@@ -5,8 +5,10 @@ import header.Command;
 import header.ProcessList;
 import header.Program;
 
-public class kill extends Command {
+
+public class Kill extends Command {
 	Program classInstance;
+
 	@Override
 	public String execute(String[] args, ProcessList list, BatchList batch){
 		try{

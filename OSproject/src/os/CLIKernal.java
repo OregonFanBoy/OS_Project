@@ -58,25 +58,24 @@ public class CLIKernal implements CommandListener{
 	   				batch.enQueue(list);
 	   				OSConsole.writeLine(call);
 	   			}
+	   			//Switch the batch list
 	   			else if(argData.length > 1 && call.equals(args[0])){
 	   				list = batch.find(call);
 	   				OSConsole.writeLine(call + " is now active");
 	   			}
+	   			// kills the batch
 	   			else if(argData.length > 1 && call.equals(args[0]+ " removed")){
 	   				OSConsole.writeLine(call);
-	   				list = null;
+	   				if(list.getName().equals(args[0])){
+	   					if(list.next == null)list = list.prev;
+	   					else list = list.next;
+	   				}  			
 	   			}
 	   			else OSConsole.writeLine(call);
-	   			/*if(args[0].equals("Kill")){
-	   				className = Class.forName("commands." + "Switch");  // Call the class loader to load and compile the command
-	 	            com = (Command) className.newInstance();
-	   				com.execute(args,list, batch);
-	   			}
-	   			*/	
 	   			args = null; 
 	   			
 	       } catch (Throwable t){ 
-	    	   if(list == null) OSConsole.writeLine("No batch has been initalized" ); //no batch exists
+	    	   if(list == null) OSConsole.writeLine("Batch does not exsist or no batch was initalized" ); //no batch exists
 	    	   else OSConsole.writeLine("Command not found" );// The class file did not exist
 	       } //end try/catch
 	       OSConsole.write("Prompt--->  ");
