@@ -86,8 +86,7 @@ public class ProcessList implements Serializable {
 		
 		while(current_P != null){
 			if(current_P.getId() == id)return current_P;
-			current_P = current_P.next;
-			
+			current_P = current_P.next;			
 		}
 		 return null;
 	}
