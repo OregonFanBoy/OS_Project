@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;commands.kill.java&apos; to &apos;Kill.java&apos;&#x0D;&#x0A;- Original project: &apos;Commands&apos;&#x0D;&#x0A;- Original element: &apos;commands.kill.java&apos;&#x0D;&#x0A;- Renamed element: &apos;commands.Kill.java&apos;" description="Rename compilation unit &apos;kill.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;commands{kill.java" name="Kill.java" references="false" stamp="1463781083585" version="1.0"/>
+</session>
