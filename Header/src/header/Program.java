@@ -1,5 +1,6 @@
 package header;
 import java.io.*;
+import java.net.Socket;
 
 public abstract class Program extends Thread implements Serializable {
 	public final static long serialVersionUID =1;
@@ -25,10 +26,32 @@ public abstract class Program extends Thread implements Serializable {
 			yield();
 		}
 		
-		//OS System call interface
-		public String system(){
-			return "This method will be completed in a later lab";
-		}
+		//OS System call interface (this is the client)
+		public String system(String call){
+			String line = null;
+			try{
+				Socket sock = new Socket("127.0.0.1",6013);
+				OutputStream out = sock.getOutputStream();
+				PrintWriter pw = new PrintWriter(new OutputStreamWriter(out),true);
+				InputStream in = sock.getInputStream();
+				BufferedReader bin = new BufferedReader(new InputStreamReader(in));
+			
+				pw.println(call);//reader writer calls system. and system will pass call to server.
+				line = bin.readLine(); //this is when the server kicks back to you.
+				//close sockets when done	
+				sock.close();
+				//close writer and reader.
+				bin.close();
+				in.close();
+				out.close();
+				pw.close();
+			}
+			catch(Exception e){
+				System.err.println(e);
+			}
+			//returns to reader/writer (line)
+			return line;
+		}// end System method.
 		
 		//Method for orderly shutdown (overrrideen in applications in a later lab)
 		public void terminate(){
