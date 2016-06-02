@@ -27,7 +27,7 @@ public abstract class Program extends Thread implements Serializable {
 		}
 		
 		//OS System call interface (this is the client)
-		public String system(String call){
+		public static String system(String call) throws IOException{
 			String line = null;
 			try{
 				Socket sock = new Socket("127.0.0.1",6013);
@@ -47,7 +47,8 @@ public abstract class Program extends Thread implements Serializable {
 				pw.close();
 			}
 			catch(Exception e){
-				System.err.println(e);
+				e.printStackTrace();
+				return "error";
 			}
 			//returns to reader/writer (line)
 			return line;

@@ -20,22 +20,23 @@ public class CLIKernal implements CommandListener{
 	String args[];
 	String name;
 	BatchList batch;
+	SystemCall server;
 	
 	public static void main(String[] args) {
 		new CLIKernal();
 	}
 	
 	public CLIKernal(){
+		try{
+			server = new SystemCall(6013,20);
+			
+		}catch(IOException e){
+			
+		}
+		server.start();
 		console = new OSConsole("The Frank and Neal Show");
 		console.setCommandListener(this);
 		batch = new BatchList();
-		try{
-		Server server = new Server(6013,50);
-		server.start();
-		}
-		catch(Exception ex){
-			
-		}
 		OSConsole.write("Prompt--->  ");
 	}
 	
@@ -78,6 +79,10 @@ public class CLIKernal implements CommandListener{
 	   					if(list.next == null)list = list.prev;
 	   					else list = list.next;
 	   				} 
+	   			}
+	   			else if(call =="Loggin out"){
+	   				server.close();
+	   				System.exit(0);
 	   			}
 	   			else OSConsole.writeLine(call);
 	   			args = null; 
