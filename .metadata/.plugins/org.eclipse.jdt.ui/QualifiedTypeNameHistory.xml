@@ -6,7 +6,6 @@
 <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
 <fullyQualifiedTypeName name="header.Command"/>
 <fullyQualifiedTypeName name="header.ProcessList"/>
-<fullyQualifiedTypeName name="header.Program"/>
 <fullyQualifiedTypeName name="console.CommandListener"/>
 <fullyQualifiedTypeName name="console.OSConsole"/>
 <fullyQualifiedTypeName name="header.BatchThread"/>
@@ -16,4 +15,11 @@
 <fullyQualifiedTypeName name="java.net.Socket"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
+<fullyQualifiedTypeName name="java.net.SocketException"/>
+<fullyQualifiedTypeName name="header.DataBase"/>
+<fullyQualifiedTypeName name="header.Program"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
 </qualifiedTypeNameHistroy>

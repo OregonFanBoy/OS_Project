@@ -33,42 +33,33 @@ public class Readerwriter extends Program implements Serializable {
 			readerArray = new Thread[rd];
 			writerArray = new Thread[wr];
 			this.out = out;
-			Random rands = new Random();
-			int rand, count = 1, base = 1;
+			
+			
 			for(int i = 0; i < db.length; i++){
 				db[i] = new DataBase();
 			}
-			rand = rands.nextInt(db.length);
-			double value = Math.random()*1;
-			for(int j = 0; j< iterations; j++){
+				
+				for(int j = 0; j < rd; j++){
+					readerArray[j] = new Thread(new Reader(j, db, this.out, iterations));//pass in iterations vs rd
+					readerArray[j].start();
+				}
+				for(int j = 0; j < wr; j++){
+					writerArray[j] = new Thread(new Writer(j, db, this.out, iterations));//pass in itterations vs wr.
+					writerArray[j].start();
+				}
+				//place start in the array.
+					
+					
+				//loop the joins.
 				for(int i = 0; i < rd; i++){
-					readerArray[i] = new Thread(new Reader(i, db, rand, this.out, value));
-					readerArray[i].start();
-					rand = (rand + base);
-					count ++;
-					if(rand >= db.length)
-						rand = 0;
-					if(count > record){
-						rand = rands.nextInt(db.length);
-						count = 1;
-					}
+					readerArray[i].join();
+					
 				}
 				for(int i = 0; i < wr; i++){
-					value = Math.random()*1;
-					writerArray[i] = new Thread(new Writer(i, db, rand, this.out, value));
-					writerArray[i].start();
-					rand = (rand + base);
-					count ++;
-					if(rand >= db.length)
-						rand = 0;
-					if(count > record){
-						rand = rands.nextInt(db.length);
-						count = 1;
-					}
+					writerArray[i].join();
 				}
-				schedule();
-				if(isInterrupted()) terminate();
-			}
+			schedule();
+			if(isInterrupted()) terminate();
 		}
 		catch(Exception e){
 			terminate();
@@ -77,15 +68,29 @@ public class Readerwriter extends Program implements Serializable {
 		return SUCCESS;
  }
 	
+	/*solve deadlock:
+	 * pick the record number, place it into array. 4th argument will be the lenght of the array.
+	 * sort array.
+	 * lock the reader
+	 * release.
+	 * 
+	 * (non-Javadoc)
+	 * @see header.Program#terminate()
+	 */
+
 	public void terminate(){
 		try{
-			for(int i = 0; i < rd; i++){
+			for(int i =0; i < rd; i++){
 				readerArray[i].interrupt();
+			}
+			for(int i = 0; i < wr; i++){
+				writerArray[i].interrupt();
+			}
+			for(int i =0; i < rd; i++){
 				readerArray[i].join();
 				out.println("Thread Reader " + i + " interrupted");
 			}
 			for(int i = 0; i < wr; i++){
-				writerArray[i].interrupt();
 				writerArray[i].join();
 				out.println("Thread Writer " + i + " interrupted");
 			}
